@@ -1,18 +1,14 @@
 import Post from '../../models/post';
 import connectDB from '../../db';
 
-import Cors from 'cors';
 
-
-const cors = initMiddleware(
-  Cors({
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Include all HTTP methods
-    origin: '*', // Allow all origins (not recommended for production)
-  })
-);
 connectDB()
 export default async function handler(req, res) {
-  await cors(req, res);
+
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  
   if (req.method === 'POST') {
     const { name, story } = req.body;
 
