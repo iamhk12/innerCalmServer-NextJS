@@ -1,7 +1,7 @@
 import connectDB from '../../db'; // Import your database connection setup
 import Post from '../../models/post';
 import Cors from 'cors';
-import initMiddleware from '../../lib/init-middleware';
+
 
 const cors = initMiddleware(
   Cors({
