@@ -5,7 +5,7 @@ import Cors from 'cors';
 // Configure CORS to allow requests from a specific origin
 const cors = Cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Include all HTTP methods
-  origin: 'https://innercalm.netlify.app', // Set the allowed origin to your Netlify app URL
+  origin: '*', // Set the allowed origin to your Netlify app URL
 });
 
 connectDB();
