@@ -1,42 +1,48 @@
-
 import connectDB from '../../db'; // Import your database connection setup
 import Post from '../../models/post';
-
+import Cors from 'cors'; // Import the Cors middleware
 
 connectDB(); // Initialize your database connection
 
-const supportPost = async (req, res) => {
+const cors = Cors({
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Include all HTTP methods
+  origin: '*', // Set the allowed origin to your desired value
+});
 
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+const notSupportPost = async (req, res) => {
+  // Set CORS headers
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     
-    await cors(req, res);
-    const { id } = req.query; // Use req.query to get the id parameter
+  // Apply CORS middleware
+  await cors(req, res);
 
-    console.log("Supporting post with id:", id);
+  const { id } = req.query; // Use req.query to get the id parameter
 
-    if (req.method === 'PUT') {
-        try {
-            const postToUpdate = await Post.findById(id);
+  console.log("Supporting post with id:", id);
 
-            if (!postToUpdate) {
-                return res.status(404).json({ error: 'Post not found' });
-            }
+  if (req.method === 'PUT') {
+    try {
+      const postToUpdate = await Post.findById(id);
 
-            if (postToUpdate.supports > 0)
-                postToUpdate.supports -= 1;
+      if (!postToUpdate) {
+        return res.status(404).json({ error: 'Post not found' });
+      }
 
-            await postToUpdate.save();
+      if (postToUpdate.supports > 0)
+        postToUpdate.supports -= 1;
 
-            return res.status(200).json({ message: 'Support added successfully' });
-        } catch (error) {
-            console.error(error);
-            return res.status(500).json({ error: 'Internal Server Error' });
-        }
-    } else {
-        res.status(405).end(); // Method Not Allowed
+      await postToUpdate.save();
+
+      return res.status(200).json({ message: 'Support removed successfully' });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: 'Internal Server Error' });
     }
+  } else {
+    res.status(405).end(); // Method Not Allowed
+  }
 };
 
-export default supportPost;
+export default notSupportPost;
