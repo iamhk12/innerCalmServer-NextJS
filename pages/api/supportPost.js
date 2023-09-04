@@ -1,20 +1,13 @@
 
 import connectDB from '../../db'; // Import your database connection setup
 import Post from '../../models/post';
-import Cors from 'cors';
-
-
-const cors = initMiddleware(
-  Cors({
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Include all HTTP methods
-    origin: '*', // Allow all origins (not recommended for production)
-  })
-); // Import your Post model or schema
 
 connectDB(); // Initialize your database connection
 
 const supportPost = async (req, res) => {
-  await cors(req, res);
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   const { id } = req.query; // Use req.query to get the id parameter
 
   console.log("Supporting post with id:", id);
