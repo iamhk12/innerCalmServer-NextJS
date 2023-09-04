@@ -1,4 +1,4 @@
-import connectDB from '../db'; // Import your database connection setup
+import connectDB from '../../db'; // Import your database connection setup
 import Post from '../../models/post'; // Import your Post model or schema
 
 connectDB(); // Initialize your database connection

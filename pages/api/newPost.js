@@ -1,5 +1,5 @@
 import Post from '../../models/post';
-import connectDB from '../db';
+import connectDB from '../../db';
 connectDB()
 export default async function handler(req, res) {
   if (req.method === 'POST') {
