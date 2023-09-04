@@ -2,16 +2,16 @@ import Post from '../../models/post';
 import connectDB from '../../db';
 import Cors from 'cors';
 
-const cors = initMiddleware(
-  Cors({
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Include all HTTP methods
-    origin: 'https://innercalm.netlify.app', // Set the allowed origin to your Netlify app URL
-  })
-);
+// Configure CORS to allow requests from a specific origin
+const cors = Cors({
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Include all HTTP methods
+  origin: 'https://innercalm.netlify.app', // Set the allowed origin to your Netlify app URL
+});
 
 connectDB();
 
 export default async function handler(req, res) {
+  // Enable CORS for this route
   await cors(req, res);
   console.log("endpoint /allPosts called");
 
