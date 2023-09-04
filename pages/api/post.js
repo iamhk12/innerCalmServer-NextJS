@@ -1,9 +1,19 @@
 import connectDB from '../../db'; // Import your database connection setup
-import Post from '../../models/post'; // Import your Post model or schema
+import Post from '../../models/post';
+import Cors from 'cors';
+import initMiddleware from '../../lib/init-middleware';
+
+const cors = initMiddleware(
+  Cors({
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Include all HTTP methods
+    origin: '*', // Allow all origins (not recommended for production)
+  })
+); // Import your Post model or schema
 
 connectDB(); // Initialize your database connection
 
 const getPost = async (req, res) => {
+  await cors(req, res);
   const postId = req.query.id;
 
   try {

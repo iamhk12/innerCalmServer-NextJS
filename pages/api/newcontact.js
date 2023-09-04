@@ -1,10 +1,20 @@
 
 import connectDB from '../../db'; // Import your database connection setup
 import Contact from '../../models/contact'; // Import your Contact model or schema
+import Cors from 'cors';
+import initMiddleware from '../../lib/init-middleware';
+
+const cors = initMiddleware(
+  Cors({
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Include all HTTP methods
+    origin: '*', // Allow all origins (not recommended for production)
+  })
+);
 
 connectDB(); // Initialize your database connection
 
 const newContact = async (req, res) => {
+  await cors(req, res);
   if (req.method === 'POST') {
     const { name, email, phone, subject, message } = req.body;
 
