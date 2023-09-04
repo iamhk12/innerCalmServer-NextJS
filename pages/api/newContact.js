@@ -2,7 +2,6 @@
 import connectDB from '../../db'; // Import your database connection setup
 import Contact from '../../models/contact'; // Import your Contact model or schema
 import Cors from 'cors';
-import initMiddleware from '../../lib/init-middleware';
 
 const cors = initMiddleware(
   Cors({
