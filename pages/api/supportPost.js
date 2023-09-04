@@ -1,13 +1,21 @@
-
 import connectDB from '../../db'; // Import your database connection setup
 import Post from '../../models/post';
 
 connectDB(); // Initialize your database connection
 
 const supportPost = async (req, res) => {
+  // Set CORS headers for all responses
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  // Check if it's an OPTIONS request (preflight)
+  if (req.method === 'OPTIONS') {
+    // Respond to preflight request with a 200 OK status
+    res.status(200).end();
+    return;
+  }
+
   const { id } = req.query; // Use req.query to get the id parameter
 
   console.log("Supporting post with id:", id);
