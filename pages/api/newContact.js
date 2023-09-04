@@ -1,19 +1,15 @@
 
 import connectDB from '../../db'; // Import your database connection setup
 import Contact from '../../models/contact'; // Import your Contact model or schema
-import Cors from 'cors';
 
-const cors = initMiddleware(
-  Cors({
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Include all HTTP methods
-    origin: '*', // Allow all origins (not recommended for production)
-  })
-);
 
 connectDB(); // Initialize your database connection
 
 const newContact = async (req, res) => {
-  await cors(req, res);
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  
   if (req.method === 'POST') {
     const { name, email, phone, subject, message } = req.body;
 
